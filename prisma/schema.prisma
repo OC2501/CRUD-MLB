@@ -1,0 +1,64 @@
+// This is your Prisma schema file,
+// learn more about it in the docs: https://pris.ly/d/prisma-schema
+
+// Looking for ways to speed up your queries, or scale easily with your serverless or edge functions?
+// Try Prisma Accelerate: https://pris.ly/cli/accelerate-init
+
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "postgresql"
+  url      = env("POSTGRES_URL")
+}
+
+model equipos {
+  id_equipo Int    @id @default(autoincrement())
+  nombre    String @unique
+  ciudad    String
+
+  partidos_local partidos[] @relation("PartidosLocales")
+  partidos_visitante partidos[] @relation("PartidosVisitantes")
+  
+  jugadorequipo  jugadorequipo[]
+}
+
+model estadios {
+  id_estadio Int        @id @default(autoincrement())
+  nombre     String
+  ubicacion  String
+  partidos   partidos[]
+}
+
+model jugadores {
+  id_jugador Int    @id @default(autoincrement())
+  nombre     String
+  posicion   String
+
+  jugador_equipo jugadorequipo[]
+}
+
+model jugadorequipo {
+  id         Int       @id @default(autoincrement())
+  id_equipo  equipos   @relation(fields: [equipoId], references: [id_equipo])
+  equipoId   Int
+  id_jugador jugadores @relation(fields: [jugadorId], references: [id_jugador])
+  jugadorId  Int
+}
+
+model partidos {
+  id_partido          Int      @id @default(autoincrement())
+  fecha               DateTime
+  resultado_local     Int
+  resultado_visitante Int
+
+  id_estadio estadios @relation(fields: [estadioId], references: [id_estadio])
+  estadioId  Int
+
+  id_equipo_local equipos @relation(fields: [equipoIdLocal], references: [id_equipo], name: "PartidosLocales")
+  equipoIdLocal   Int
+
+  id_equipo_visitante equipos @relation(fields: [equipoIdVisitante], references: [id_equipo], name: "PartidosVisitantes")
+  equipoIdVisitante   Int
+}
