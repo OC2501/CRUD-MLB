@@ -1,10 +1,12 @@
 import { Router } from "express";
 import { JugadoresController } from "./controller";
+import { JugadoresService } from "../services/jugadores.services";
 
 export class JugadoresRoute{
     static get routes(): Router{
         const routes= Router();
-        const controller = new JugadoresController();
+        const jugadoresService = new JugadoresService()
+        const controller = new JugadoresController(jugadoresService);
         routes.get('/',controller.findAll);
         routes.post('/',controller.create);
         routes.delete('/',controller.delete);

@@ -1,9 +1,20 @@
+import { EstadiosService } from "../services/estadios.services";
+import { CreateEstadioDto } from "../../domain/dtos/estadios/create-estadios.dto";
 import { Request, Response } from "express";
 
 export class EstadiosController{
-    create = (req:Request,res:Response)=>{
-        return res.json({message:"estadio create"});
-            }
+    constructor(
+        private readonly estadiosService: EstadiosService,
+    ){}
+
+    create = ( req:Request, res: Response ) => {
+        const [ error, createEstadioDto ] = CreateEstadioDto.create( req.body );
+        if( error ) return res.status(400).json({error})
+        
+        this.estadiosService.create( createEstadioDto! )
+        .then( estadios => res.json(estadios) )
+        .catch(error => res.status(500).json({error}));
+    }
 
             update = (req:Request,res:Response)=>{
                 return res.json({message:"estadio update"});
