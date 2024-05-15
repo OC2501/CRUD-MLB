@@ -9,8 +9,8 @@ export class EquiposRoute{
         const controller = new EquiposController(equiposService);
         routes.get('/',controller.findAll);
         routes.post('/',controller.create);
-        routes.delete('/id_equipo:',controller.delete);
-        routes.put('/id_equipo:',controller.update);
+        routes.delete('/:id_equipo',controller.delete);
+        routes.put('/:id_equipo',controller.update);
 
         return routes;
     }

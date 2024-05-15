@@ -9,8 +9,8 @@ export class JugadoresRoute{
         const controller = new JugadoresController(jugadoresService);
         routes.get('/',controller.findAll);
         routes.post('/',controller.create);
-        routes.delete('/',controller.delete);
-        routes.put('/',controller.update);
+        routes.delete('/:id_jugador',controller.delete);
+        routes.put('/:id_jugador',controller.update);
 
         return routes;
     }
