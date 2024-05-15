@@ -18,4 +18,15 @@ export class EstadiosService{
             throw error;
         }
     }
+
+    async findAll(): Promise<EstadiosEntity[]>{
+        try {
+            const newEstadio = await prisma.estadios.findMany( );
+            //if( !newEquipo ) throw Error;
+    
+            return newEstadio;
+        } catch (error) {
+            throw error;
+        }
+    }
 }
