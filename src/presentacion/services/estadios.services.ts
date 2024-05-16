@@ -37,6 +37,20 @@ export class EstadiosService{
         }
     }
 
+    async delete( id_estadio: string ): Promise<EstadiosEntity>{
+        try {
+            const deleteEstadio = await prisma.estadios.delete({
+                where: {
+                    id_estadio: +id_estadio,
+                },
+            })
+            if(!deleteEstadio) throw Error ('Estadio no encontrado');
+            return deleteEstadio
+        } catch (error) {
+            throw error;
+        }
+    }
+
     async findAll(): Promise<EstadiosEntity[]>{
         try {
             const newEstadio = await prisma.estadios.findMany( );

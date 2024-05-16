@@ -38,6 +38,20 @@ export class JugadorEquipoService{
         }
     }
 
+    async delete( id: string ): Promise<JugadorEquipoEntity>{
+        try {
+            const deleteJugadorEquipo = await prisma.jugadorequipo.delete({
+                where: {
+                    id: +id,
+                },
+            })
+            if(!deleteJugadorEquipo) throw Error ('Jugador por equipo no encontrado');
+            return deleteJugadorEquipo
+        } catch (error) {
+            throw error;
+        }
+    }
+
     async findAll(): Promise<JugadorEquipoEntity[]>{
         try {
             const newJugadorEquipo = await prisma.jugadorequipo.findMany( );

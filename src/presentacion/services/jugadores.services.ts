@@ -37,6 +37,20 @@ export class JugadoresService{
         }
     }
 
+    async delete( id_jugador: string ): Promise<JugadoresEntity>{
+        try {
+            const deleteJugador = await prisma.jugadores.delete({
+                where: {
+                    id_jugador: +id_jugador,
+                },
+            })
+            if(!deleteJugador) throw Error ('Jugador no encontrado');
+            return deleteJugador
+        } catch (error) {
+            throw error;
+        }
+    }
+
     
     async findAll(): Promise<JugadoresEntity[]>{
         try {

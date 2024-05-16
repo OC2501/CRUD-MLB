@@ -30,7 +30,12 @@ export class EstadiosController {
   };
 
   delete = (req: Request, res: Response) => {
-    return res.json({ message: "estadio delete" });
+    const id_estadio = req.params.id_estadio;
+ 
+
+      this.estadiosService.delete(id_estadio)
+      .then((estadios) => res.json(estadios))
+      .catch((error) => res.status(500).json({ error }));
   };
 
   findAll = (req: Request, res: Response) => {

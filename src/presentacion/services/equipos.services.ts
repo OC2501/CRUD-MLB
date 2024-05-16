@@ -38,6 +38,20 @@ export class EquiposService{
         }
     }
 
+    async delete( id_equipo: string ): Promise<EquiposEntity>{
+        try {
+            const deleteEquipo = await prisma.equipos.delete({
+                where: {
+                    id_equipo: +id_equipo,
+                },
+            })
+            if(!deleteEquipo) throw Error ('Equipo no encontrado');
+            return deleteEquipo
+        } catch (error) {
+            throw error;
+        }
+    }
+
     async findAll(): Promise<EquiposEntity[]>{
         try {
             const newEquipo = await prisma.equipos.findMany( );

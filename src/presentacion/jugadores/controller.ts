@@ -30,10 +30,14 @@ export class JugadoresController{
           .catch((error) => res.status(500).json({ error }));
       };    
             
-            delete = (req:Request,res:Response)=>{
-                return res.json({message:"jugador delete"});
-                
-            }
+      delete = (req: Request, res: Response) => {
+        const id_jugador = req.params.id_jugador;
+     
+    
+          this.jugadoresService.delete(id_jugador)
+          .then((jugadores) => res.json(jugadores))
+          .catch((error) => res.status(500).json({ error }));
+      };
 
     findAll = (req: Request, res: Response) => {
         this.jugadoresService.findAll()

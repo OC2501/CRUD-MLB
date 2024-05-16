@@ -29,14 +29,17 @@ export class JugadorEquipoController{
           .catch((error) => res.status(500).json({ error }));
       };   
             
-            delete = (req:Request,res:Response)=>{
-                return res.json({message:"jugador por equipo delete"});
-                
-            }
+      delete = (req: Request, res: Response) => {
+        const id = req.params.id;
+   
+          this.jugadorEquipoService.delete(id)
+          .then((jugadorequipos) => res.json(jugadorequipos))
+          .catch((error) => res.status(500).json({ error }));
+      };
 
-            findAll = (req: Request, res: Response) => {
-                this.jugadorEquipoService.findAll()
-                .then( jugadorequipos => res.json(jugadorequipos) )
-                .catch(error => res.status(500).json({error: "internal server"}));
-            };
+      findAll = (req: Request, res: Response) => {
+      this.jugadorEquipoService.findAll()
+      .then( jugadorequipos => res.json(jugadorequipos) )
+      .catch(error => res.status(500).json({error: "internal server"}));
+      };
 }

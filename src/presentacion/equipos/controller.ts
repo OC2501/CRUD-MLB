@@ -27,8 +27,14 @@ export class EquiposController {
       .then((equipos) => res.json(equipos))
       .catch((error) => res.status(500).json({ error }));
   };
+
   delete = (req: Request, res: Response) => {
-    return res.json({ message: "team delete" });
+    const id_equipo = req.params.id_equipo;
+ 
+
+      this.equiposService.delete(id_equipo)
+      .then((equipos) => res.json(equipos))
+      .catch((error) => res.status(500).json({ error }));
   };
 
   findAll = (req: Request, res: Response) => {

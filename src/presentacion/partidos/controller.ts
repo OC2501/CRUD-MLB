@@ -28,9 +28,15 @@ export class PartidosController {
       .then((partidos) => res.json(partidos))
       .catch((error) => res.status(500).json({ error }));
   };
+
   delete = (req: Request, res: Response) => {
-    return res.json({ message: "partido delete" });
+    const id_partido = req.params.id_partido;
+ 
+      this.partidosService.delete(id_partido)
+      .then((partidos) => res.json(partidos))
+      .catch((error) => res.status(500).json({ error }));
   };
+
 
   findAll = (req: Request, res: Response) => {
     this.partidosService.findAll()

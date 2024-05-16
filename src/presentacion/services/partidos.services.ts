@@ -40,6 +40,20 @@ export class PartidosService {
     }
 }
 
+async delete( id_partido: string ): Promise<PartidosEntity>{
+  try {
+      const deletePartido = await prisma.partidos.delete({
+          where: {
+              id_partido: +id_partido,
+          },
+      })
+      if(!deletePartido) throw Error ('Partido no encontrado');
+      return deletePartido
+  } catch (error) {
+      throw error;
+  }
+}
+
   async findAll(): Promise<PartidosEntity[]>{
     try {
         const newPartidos = await prisma.partidos.findMany( );
