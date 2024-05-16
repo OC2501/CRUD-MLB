@@ -1,6 +1,7 @@
 import { Request, Response } from "express";
 import { CreatePartidosDto } from "../../domain/dtos/partidos/create-partidos.dto";
 import { PartidosService } from "../services/partidos.services";
+import { UpdatePartidosDto } from "../../domain/dtos/partidos/update-partidos.dto";
 
 export class PartidosController {
   constructor(private readonly partidosService: PartidosService) {}
@@ -16,14 +17,24 @@ export class PartidosController {
   };
 
   update = (req: Request, res: Response) => {
-    return res.json({ message: "partido update" });
-  };
+    const [error, updatePartidosDto] = UpdatePartidosDto.update({
+      ...req.body,
+      id_partido: req.params.id_partido,
+    });
+    if (error) return res.status(400).json({ error });
 
+    this.partidosService
+      .update(updatePartidosDto!)
+      .then((partidos) => res.json(partidos))
+      .catch((error) => res.status(500).json({ error }));
+  };
   delete = (req: Request, res: Response) => {
     return res.json({ message: "partido delete" });
   };
 
   findAll = (req: Request, res: Response) => {
-    return res.json({ message: "partidos findAll" });
-  };
+    this.partidosService.findAll()
+    .then( partidos => res.json(partidos) )
+    .catch(error => res.status(500).json({error: "internal server"}));
+};
 }

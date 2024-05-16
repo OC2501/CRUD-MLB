@@ -32,6 +32,8 @@ export class EquiposController {
   };
 
   findAll = (req: Request, res: Response) => {
-    return res.json({ message: "team delete" });
+    this.equiposService.findAll()
+    .then( equipos => res.json(equipos) )
+    .catch(error => res.status(500).json({error: "internal server"}));
   };
 }

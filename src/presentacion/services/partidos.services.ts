@@ -1,5 +1,6 @@
 import { prisma } from "../../database/postgresql/database";
 import { CreatePartidosDto } from "../../domain/dtos/partidos/create-partidos.dto";
+import { UpdatePartidosDto } from "../../domain/dtos/partidos/update-partidos.dto";
 import { PartidosEntity } from "../../domain/entities/partidos.entity";
 
 export class PartidosService {
@@ -20,4 +21,35 @@ export class PartidosService {
       throw error;
     }
   }
+
+  async update( updatePartidosDto: UpdatePartidosDto ): Promise<PartidosEntity>{
+    const { fecha } = updatePartidosDto;
+    try {
+        const partidos = await prisma.partidos.update({
+            where: {
+                id_partido: updatePartidosDto.id_partido,
+            },
+            data: {
+                ...updatePartidosDto,
+                fecha: new Date(fecha)
+            }
+        })
+        return partidos;
+    } catch (error) {
+        throw error;
+    }
+}
+
+  async findAll(): Promise<PartidosEntity[]>{
+    try {
+        const newPartidos = await prisma.partidos.findMany( );
+        //if( !newEquipo ) throw Error;
+
+        return newPartidos;
+    } catch (error) {
+        throw error;
+    }
+}
+
+
 }

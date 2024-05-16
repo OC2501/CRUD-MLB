@@ -1,5 +1,6 @@
 import { prisma } from "../../database/postgresql/database";
 import { CreateEstadioDto } from "../../domain/dtos/estadios/create-estadios.dto";
+import { UpdateEstadioDto } from "../../domain/dtos/estadios/update-estadios.dto";
 import { EstadiosEntity } from "../../domain/entities/estadios.entity";
 
 export class EstadiosService{
@@ -14,6 +15,23 @@ export class EstadiosService{
             //if( !newEquipo ) throw Error;
     
             return newEstadio;
+        } catch (error) {
+            throw error;
+        }
+    }
+
+    async update( updateEstadioDto: UpdateEstadioDto ): Promise<EstadiosEntity>{
+
+        try {
+            const estadios = await prisma.estadios.update({
+                where: {
+                    id_estadio: updateEstadioDto.id_estadio,
+                },
+                data: {
+                    ...updateEstadioDto
+                }
+            })
+            return estadios;
         } catch (error) {
             throw error;
         }

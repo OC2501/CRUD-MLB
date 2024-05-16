@@ -1,6 +1,7 @@
 import { EstadiosService } from "../services/estadios.services";
 import { CreateEstadioDto } from "../../domain/dtos/estadios/create-estadios.dto";
 import { Request, Response } from "express";
+import { UpdateEstadioDto } from "../../domain/dtos/estadios/update-estadios.dto";
 
 export class EstadiosController {
   constructor(private readonly estadiosService: EstadiosService) {}
@@ -16,7 +17,16 @@ export class EstadiosController {
   };
 
   update = (req: Request, res: Response) => {
-    return res.json({ message: "estadio update" });
+    const [error, updateEstadiosDto] = UpdateEstadioDto.update({
+      ...req.body,
+      id_estadio: req.params.id_estadio,
+    });
+    if (error) return res.status(400).json({ error });
+
+    this.estadiosService
+      .update(updateEstadiosDto!)
+      .then((estadios) => res.json(estadios))
+      .catch((error) => res.status(500).json({ error }));
   };
 
   delete = (req: Request, res: Response) => {

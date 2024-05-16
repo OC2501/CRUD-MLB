@@ -37,5 +37,17 @@ export class EquiposService{
             throw error;
         }
     }
+
+    async findAll(): Promise<EquiposEntity[]>{
+        try {
+            const newEquipo = await prisma.equipos.findMany( );
+            //if( !newEquipo ) throw Error;
+    
+            return newEquipo;
+        } catch (error) {
+            throw error;
+        }
+    }
 }
+
 

@@ -1,5 +1,6 @@
 import { prisma } from "../../database/postgresql/database";
 import { CreateJugadoresDto } from "../../domain/dtos/jugadores/create-jugadores.dto";
+import { UpdateJugadoresDto } from "../../domain/dtos/jugadores/update-jugadores.dto";
 import { JugadoresEntity } from "../../domain/entities/jugadores.entity";
 
 export class JugadoresService{
@@ -18,4 +19,35 @@ export class JugadoresService{
             throw error;
         }
     }
+
+    async update( updateJugadoresDto: UpdateJugadoresDto ): Promise<JugadoresEntity>{
+
+        try {
+            const jugadores = await prisma.jugadores.update({
+                where: {
+                    id_jugador: updateJugadoresDto.id_jugador,
+                },
+                data: {
+                    ...updateJugadoresDto
+                }
+            })
+            return jugadores
+        } catch (error) {
+            throw error;
+        }
+    }
+
+    
+    async findAll(): Promise<JugadoresEntity[]>{
+        try {
+            const newJugadores = await prisma.jugadores.findMany( );
+            //if( !newEquipo ) throw Error;
+    
+            return newJugadores;
+        } catch (error) {
+            throw error;
+        }
+    }
+
+
 }
